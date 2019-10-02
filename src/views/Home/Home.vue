@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div>464646</div>
+    <div style="font-size:100px;">我是首页</div>
   </div>
 </template>
 
