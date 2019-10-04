@@ -9,7 +9,7 @@
         :unique-opened="false"
         :collapse-transition="false"
       >
-        <sidebar-item v-for="item in baseRoutes" :key="item.path" :item="item"></sidebar-item>
+        <sidebar-item v-for="item in baseRoutes" :key="item.path" :item="item" :base-path="item.path"></sidebar-item>
       </el-menu>
     </el-scrollbar>
   </div>
