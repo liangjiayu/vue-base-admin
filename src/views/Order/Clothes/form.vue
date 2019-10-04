@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div style="font-size:100px;">home</div>
+    <div style="font-size:100px;">clothes-form</div>
   </div>
 </template>
 
 
 <script>
 export default {
-  name: "Home",
+  name: "Form",
   components: {},
   mixins: [],
   props: {},

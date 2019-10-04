@@ -1,13 +1,13 @@
 <template>
   <div>
-    <div style="font-size:100px;">home</div>
+    <router-view></router-view>
   </div>
 </template>
 
 
 <script>
 export default {
-  name: "Home",
+  name: "Clothes",
   components: {},
   mixins: [],
   props: {},

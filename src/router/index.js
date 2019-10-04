@@ -7,61 +7,54 @@ import layout from '../layout/layout.vue';
 
 const baseRoutes = [
   {
+    path: '/login',
+    component: () => import('../views/Login/index.vue'),
+    hidden: true,
+  },
+  {
     path: '/',
     component: layout,
     redirect: '/home',
     children: [
       {
         path: 'home',
-        name: 'Home',
-        component: () => import('../views/Home/Home.vue'),
+        name: 'home',
+        component: () => import('../views/Home/home.vue'),
         meta: { title: '首页' },
       },
     ],
   },
   {
-    path: '/login',
-    component: () => import('../views/Login/index.vue'),
-    hidden: true,
-  },
-  {
-    path: '/tree',
+    path: '/order',
     component: layout,
-    redirect: '/tree/menu1',
-    meta: { title: '多级菜单' },
+    redirect: '/order/search',
+    meta: { title: '订单模块' },
     children: [
       {
-        path: 'menu1',
-        name: 'Menu1',
-        component: () => import('../views/Tree/Menu1/index.vue'),
-        meta: { title: '菜单1' },
-        children: [
-          {
-            path: 'menu1-1',
-            name: 'Menu1-1',
-            component: () => import('../views/Tree/Menu1/Menu1-1/index.vue'),
-            meta: { title: '菜单1-1' },
-          },
-          {
-            path: 'menu1-2',
-            name: 'Menu1-2',
-            component: () => import('../views/Tree/Menu1/Menu1-2/index.vue'),
-            meta: { title: '菜单1-2' },
-          },
-          {
-            path: 'menu1-3',
-            name: 'Menu1-3',
-            component: () => import('../views/Tree/Menu1/Menu1-3/index.vue'),
-            meta: { title: '菜单1-3' },
-            hidden: true,
-          },
-        ],
+        path: 'search',
+        name: 'search',
+        component: () => import('../views/Order/Search/index.vue'),
+        meta: { title: '订单搜索' },
       },
       {
-        path: 'menu2',
-        name: 'Menu2',
-        component: () => import('../views/Tree/Menu2/index.vue'),
-        meta: { title: '菜单2' },
+        path: 'clothes',
+        name: 'clothes',
+        component: () => import('../views/Order/Clothes/index.vue'),
+        meta: { title: '订单衣服' },
+        children: [
+          {
+            path: 'form',
+            name: 'form',
+            component: () => import('../views/Order/Clothes/form.vue'),
+            meta: { title: '订单衣服表单' },
+          },
+          {
+            path: 'detail',
+            name: 'detail',
+            component: () => import('../views/Order/Clothes/detail.vue'),
+            meta: { title: '订单衣服详情' },
+          },
+        ],
       },
     ],
   },
