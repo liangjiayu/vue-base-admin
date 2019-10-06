@@ -8,8 +8,14 @@
         active-text-color="#409EFF"
         :unique-opened="false"
         :collapse-transition="false"
+        :default-active="activeMenu"
       >
-        <sidebar-item v-for="item in baseRoutes" :key="item.path" :item="item" :base-path="item.path"></sidebar-item>
+        <sidebar-item
+          v-for="item in baseRoutes"
+          :key="item.path"
+          :item="item"
+          :base-path="item.path"
+        ></sidebar-item>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -52,6 +58,11 @@ export default {
         return [];
       }
       return showRoutes;
+    },
+    activeMenu() {
+      const route = this.$route;
+      const { path } = route;
+      return path;
     },
   },
   watch: {},

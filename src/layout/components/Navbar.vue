@@ -1,12 +1,10 @@
 <template>
   <div class="navbar-wrap-con">
-    <el-breadcrumb separator="/" class="navbar-breadcrumb">
-      <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>
-        <a href="/">活动管理</a>
+    <el-breadcrumb separator="/" class="navbar-breadcrumb" v-if="breadList">
+      <el-breadcrumb-item v-for="(item,index) in breadList" :key="item.path">
+        <span v-if="index === breadList.length-1">{{item.meta.title}}</span>
+        <router-link v-else :to="item.path">{{item.meta.title}}</router-link>
       </el-breadcrumb-item>
-      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-      <el-breadcrumb-item>活动详情</el-breadcrumb-item>
     </el-breadcrumb>
 
     <el-dropdown trigger="click" class="user-panel-box">
@@ -25,17 +23,34 @@
 
 <script>
 export default {
-  name: "Navbar",
+  name: 'Navbar',
   components: {},
   mixins: [],
   props: {},
   data() {
-    return {};
+    return {
+      breadList: null,
+    };
   },
   computed: {},
-  watch: {},
-  mounted() {},
-  methods: {}
+  watch: {
+    $route() {
+      this.getBreadcrumb();
+    },
+  },
+  mounted() {
+    this.getBreadcrumb();
+  },
+  methods: {
+    getBreadcrumb() {
+      let breadList = this.$route.matched.filter((item) => {
+        if (item.meta && item.meta.title) {
+          return true;
+        }
+      });
+      this.breadList = breadList;
+    },
+  },
 };
 </script>
 

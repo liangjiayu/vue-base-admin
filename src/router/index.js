@@ -39,6 +39,7 @@ const baseRoutes = [
       {
         path: 'clothes',
         name: 'clothes',
+        redirect: '/order/clothes/form',
         component: () => import('../views/Order/Clothes/index.vue'),
         meta: { title: '订单衣服' },
         children: [
