@@ -8,6 +8,8 @@
 
 
 <script>
+import { fetchGoods } from '@/api/goods.js';
+
 export default {
   name: 'list',
   components: {},
@@ -25,9 +27,12 @@ export default {
   mounted() {},
   methods: {
     changeUserInfo() {
-      this.$store.dispatch('user/updateUserInfo', {
-        name: 'zhoujielun',
-        age: 32,
+      // this.$store.dispatch('user/updateUserInfo', {
+      //   name: 'zhoujielun',
+      //   age: 32,
+      // });
+      fetchGoods().then((res) => {
+        console.log(res);
       });
     },
   },

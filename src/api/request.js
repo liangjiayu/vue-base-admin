@@ -1,10 +1,11 @@
 import axios from 'axios';
 import { Message } from 'element-ui';
+import qs from 'qs';
 
 const service = axios.create({
-  baseURL: '',
+  baseURL: 'http://localhost:8080',
   // withCredentials: true,
-  timeout: 5000, // request timeout
+  timeout: 5000,
 });
 
 service.interceptors.request.use(
@@ -22,18 +23,7 @@ service.interceptors.request.use(
 service.interceptors.response.use(
   (response) => {
     const res = response.data;
-
-    if (res.code !== 20000) {
-      Message({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 5 * 1000,
-      });
-
-      return Promise.reject(new Error(res.message || 'Error'));
-    } else {
-      return res;
-    }
+    return res;
   },
   (error) => {
     console.log(error);
@@ -45,3 +35,14 @@ service.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export function requestPost(option = {}) {
+  return service({
+    method: 'post',
+    url: option.url,
+    // data: qs.stringify(option.params),
+    data: option.params,
+  });
+}
+
+export default service;

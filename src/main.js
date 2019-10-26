@@ -8,6 +8,7 @@ import './styles/index.scss'; //global css
 import App from './App.vue';
 import router from './router/index';
 import store from './store/index';
+import '../mock';
 
 Vue.use(ElementUI);
 
