@@ -5,6 +5,9 @@ Vue.use(VueRouter);
 
 import layout from '../layout/layout.vue';
 
+// router modules
+import exampleRouter from './modules/example';
+
 const baseRoutes = [
   {
     path: '/login',
@@ -24,41 +27,7 @@ const baseRoutes = [
       },
     ],
   },
-  {
-    path: '/order',
-    component: layout,
-    redirect: '/order/search',
-    meta: { title: '订单模块' },
-    children: [
-      {
-        path: 'search',
-        name: 'search',
-        component: () => import('../views/Order/Search/index.vue'),
-        meta: { title: '订单搜索' },
-      },
-      {
-        path: 'clothes',
-        name: 'clothes',
-        redirect: '/order/clothes/form',
-        component: () => import('../views/Order/Clothes/index.vue'),
-        meta: { title: '订单衣服' },
-        children: [
-          {
-            path: 'form',
-            name: 'form',
-            component: () => import('../views/Order/Clothes/form.vue'),
-            meta: { title: '订单衣服表单' },
-          },
-          {
-            path: 'detail',
-            name: 'detail',
-            component: () => import('../views/Order/Clothes/detail.vue'),
-            meta: { title: '订单衣服详情' },
-          },
-        ],
-      },
-    ],
-  },
+  exampleRouter,
 ];
 
 const createRouter = () => {
