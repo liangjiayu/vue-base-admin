@@ -1,11 +1,12 @@
-@charset 'utf-8';
-
 @mixin text-overflow($line: 1) {
   overflow: hidden;
+
   @if $line==1 {
     white-space: nowrap;
     text-overflow: ellipsis;
-  } @else {
+  }
+
+  @else {
     display: -webkit-box;
     white-space: normal;
     -webkit-line-clamp: $line;

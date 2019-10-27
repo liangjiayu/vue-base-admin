@@ -47,12 +47,12 @@ const baseRoutes = [
   {
     path: '/news',
     component: layout,
-    redirect: '/news/home',
+    redirect: '/news/list',
     children: [
       {
-        path: 'home',
-        name: 'homeNews',
-        component: () => import('../views/news/homeNews.vue'),
+        path: 'list',
+        name: 'list',
+        component: () => import('../views/news/list.vue'),
       },
     ],
   },

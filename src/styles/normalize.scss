@@ -1,6 +1,6 @@
 @charset 'utf-8';
 
-/* reset v1.3 */
+/* reset v1.4 pc */
 html,
 body,
 h1,
@@ -34,6 +34,7 @@ legend {
 body {
   font-size: 12px;
   line-height: 1.2;
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
   // font-family: -apple-system, BlinkMacSystemFont, Helvetica Neue, Helvetica, PingFang SC, Microsoft YaHei, Arial, sans-serif;
 }
 
@@ -104,6 +105,10 @@ video {
   max-width: 100%;
 }
 
+html {
+  box-sizing: border-box;
+}
+
 *,
 *:before,
 *:after {
@@ -127,4 +132,4 @@ video {
   clear: both;
 }
 
-/* reset v1.3 */
+/* reset v1.4 pc */
