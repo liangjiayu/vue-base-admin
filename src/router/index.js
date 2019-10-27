@@ -11,9 +11,9 @@ import exampleRouter from './modules/example';
 const baseRoutes = [
   {
     path: '/login',
-    component: () => import('../views/Login/index.vue'),
-    hidden: true,
+    component: () => import('../views/login/index.vue'),
   },
+
   {
     path: '/',
     component: layout,
@@ -22,8 +22,54 @@ const baseRoutes = [
       {
         path: 'home',
         name: 'home',
-        component: () => import('../views/Home/home.vue'),
-        meta: { title: '首页' },
+        component: () => import('../views/home/home.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/list',
+    component: layout,
+    children: [
+      {
+        path: 'base',
+        name: 'baseList',
+        component: () => import('../views/list/baseList.vue'),
+      },
+      {
+        path: 'general',
+        name: 'generalList',
+        component: () => import('../views/list/generalList.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/news',
+    component: layout,
+    redirect: '/news/home',
+    children: [
+      {
+        path: 'home',
+        name: 'homeNews',
+        component: () => import('../views/news/homeNews.vue'),
+      },
+    ],
+  },
+
+  {
+    path: '/table',
+    component: layout,
+    children: [
+      {
+        path: 'base',
+        name: 'baseTable',
+        component: () => import('../views/table/baseTable.vue'),
+      },
+      {
+        path: 'general',
+        name: 'generalTable',
+        component: () => import('../views/table/generalTable.vue'),
       },
     ],
   },

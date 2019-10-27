@@ -25,6 +25,21 @@ body {
     .el-menu {
       border: none;
     }
+
+    .el-menu-item {
+      height: 48px;
+      line-height: 48px;
+    }
+
+    .el-submenu__title {
+      height: 48px;
+      line-height: 48px;
+    }
+
+    [class^="jy-icon-"] {
+      margin-right: 14px;
+      font-size: 16px;
+    }
   }
 
   .app-main-con {
@@ -48,5 +63,10 @@ body {
 
   .app-main-box {
     display: block;
+  }
+
+  .app-main-content {
+    display: block;
+    overflow: hidden;
   }
 }

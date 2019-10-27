@@ -1,8 +1,8 @@
 import { requestPost } from './request';
 
-export function fetchGoods(params) {
+export function fetchGoods(data) {
   return requestPost({
     url: '/goods/list',
-    params: params,
+    data: data,
   });
 }

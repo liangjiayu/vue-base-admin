@@ -3,13 +3,16 @@ import layout from '@/layout/layout.vue';
 const exampleRouter = {
   path: '/example',
   component: layout,
-  meta: { title: '例子' },
   children: [
     {
+      path: 'create',
+      name: 'createExample',
+      component: () => import('@/views/example/create'),
+    },
+    {
       path: 'list',
-      name: 'list',
+      name: 'listExample',
       component: () => import('@/views/example/list'),
-      meta: { title: '例子列表' },
     },
   ],
 };

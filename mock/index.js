@@ -1,7 +1,6 @@
 import Mock from 'mockjs';
 
 Mock.mock('http://localhost:8080/goods/list', 'post', (params) => {
-  console.log(params);
   return Mock.mock({
     'data|2': [
       //生成100条数据 数组

@@ -41,7 +41,7 @@ export function requestPost(option = {}) {
     method: 'post',
     url: option.url,
     // data: qs.stringify(option.params),
-    data: option.params,
+    data: option.data,
   });
 }
 

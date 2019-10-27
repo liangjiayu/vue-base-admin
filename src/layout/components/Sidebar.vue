@@ -4,18 +4,13 @@
       <el-menu
         mode="vertical"
         background-color="#304156"
-        text-color="#bfcbd9"
+        text-color="#fff"
         active-text-color="#409EFF"
         :unique-opened="false"
         :collapse-transition="false"
         :default-active="activeMenu"
       >
-        <sidebar-item
-          v-for="item in baseRoutes"
-          :key="item.path"
-          :item="item"
-          :base-path="item.path"
-        ></sidebar-item>
+        <sidebar-item v-for="item in sideMenuConfig" :key="item.path" :item="item"></sidebar-item>
       </el-menu>
     </el-scrollbar>
   </div>
@@ -24,22 +19,7 @@
 
 <script>
 import SidebarItem from './SidebarItem';
-
-// 递归过滤需要隐藏的菜单选项
-function filterHidden(routes) {
-  let handleChildren = (data) => {
-    return data.filter((item) => {
-      if (item.children) {
-        item.children = handleChildren(item.children);
-      }
-      if (!item.hidden) {
-        return true;
-      }
-    });
-  };
-
-  return handleChildren(routes);
-}
+import { sideMenuConfig } from '@/configs/menu.js';
 
 export default {
   name: 'Sidebar',
@@ -49,16 +29,11 @@ export default {
   mixins: [],
   props: {},
   data() {
-    return {};
+    return {
+      sideMenuConfig: sideMenuConfig,
+    };
   },
   computed: {
-    baseRoutes() {
-      let showRoutes = filterHidden(this.$router.options.routes);
-      if (!showRoutes) {
-        return [];
-      }
-      return showRoutes;
-    },
     activeMenu() {
       const route = this.$route;
       const { path } = route;

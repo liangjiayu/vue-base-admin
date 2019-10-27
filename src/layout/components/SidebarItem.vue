@@ -2,31 +2,30 @@
   <div>
     <!-- 只有一级导航 -->
     <template v-if="routerInfoState==='singel'">
-      <sidebar-link :link="resolvePath(onlyOneChild.path)">
-        <el-menu-item :index="resolvePath(onlyOneChild.path)">
-          <span slot="title">{{onlyOneChild.meta.title}}</span>
+      <sidebar-link :link="onlyOneChild.path">
+        <el-menu-item :index="onlyOneChild.path">
+          <span v-if="onlyOneChild.icon" :class="[`jy-icon-${onlyOneChild.icon}`]"></span>
+          <span slot="title">{{onlyOneChild.name}}</span>
         </el-menu-item>
       </sidebar-link>
     </template>
+
     <!-- 有二级导航 -->
-    <el-submenu v-if="routerInfoState==='multiple'" :index="item.path" popper-append-to-body>
-      <template slot="title" v-if="item.meta">
-        <span>{{item.meta.title}}</span>
-      </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :item="child"
-        :base-path="resolvePath(child.path)"
-      ></sidebar-item>
-    </el-submenu>
+    <template v-if="routerInfoState==='multiple'">
+      <el-submenu :index="item.path" popper-append-to-body>
+        <template slot="title" v-if="item.name">
+          <span v-if="item.icon" :class="[`jy-icon-${item.icon}`]"></span>
+          <span>{{item.name}}</span>
+        </template>
+        <sidebar-item v-for="child in item.children" :key="child.path" :item="child"></sidebar-item>
+      </el-submenu>
+    </template>
   </div>
 </template>
 
 
 <script>
 import path from 'path';
-import { isExternal } from '@/utils/validate';
 import SidebarLink from './SidebarLink';
 
 export default {
@@ -39,10 +38,6 @@ export default {
     item: {
       type: Object,
       required: true,
-    },
-    basePath: {
-      type: String,
-      default: '',
     },
   },
   data() {
@@ -64,10 +59,17 @@ export default {
       // 3.children有多项，继续递归路由信息
       let routerItem = this.item;
       if (!routerItem.children) {
-        this.onlyOneChild = { ...routerItem, path: '' };
+        this.onlyOneChild = routerItem;
         this.routerInfoState = 'singel';
         return;
       }
+
+      if (routerItem.children.length === 0) {
+        this.onlyOneChild = routerItem;
+        this.routerInfoState = 'singel';
+        return;
+      }
+
       if (
         routerItem.children.length === 1 &&
         !routerItem.children[0].children
@@ -77,21 +79,7 @@ export default {
         return;
       }
 
-      if (routerItem.children.length === 0) {
-        return;
-      }
-
       this.routerInfoState = 'multiple';
-    },
-
-    resolvePath(routePath) {
-      if (isExternal(routePath)) {
-        return routePath;
-      }
-      if (isExternal(this.basePath)) {
-        return this.basePath;
-      }
-      return path.resolve(this.basePath, routePath);
     },
   },
 };

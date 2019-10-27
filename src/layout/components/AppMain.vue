@@ -7,7 +7,7 @@
 
 <script>
 export default {
-  name: "AppMain",
+  name: 'AppMain',
   components: {},
   mixins: [],
   props: {},
@@ -17,14 +17,10 @@ export default {
   computed: {},
   watch: {},
   mounted() {},
-  methods: {}
+  methods: {},
 };
 </script>
 
 
-<style lang="scss" scoped>
-.app-main-content {
-  display: block;
-  overflow: hidden;
-}
+<style lang="scss" >
 </style>
