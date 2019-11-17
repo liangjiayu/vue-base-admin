@@ -4,8 +4,8 @@ import qs from 'qs';
 
 const service = axios.create({
   baseURL: 'http://localhost:8080',
-  // withCredentials: true,
-  timeout: 5000,
+  withCredentials: true,
+  // timeout: 5000,
 });
 
 service.interceptors.request.use(

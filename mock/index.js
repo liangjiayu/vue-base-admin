@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-Mock.mock('http://localhost:8080/goods/list', 'post', (params) => {
+Mock.mock('http://localhost:8080/goods/list', (params) => {
   return Mock.mock({
     'data|2': [
       //生成100条数据 数组
@@ -29,5 +29,33 @@ Mock.mock('http://localhost:8080/goods/list', 'post', (params) => {
         ],
       },
     ],
+  });
+});
+
+Mock.mock('http://localhost:8080/news/list', (params) => {
+  let { pageSize, pageNum } = JSON.parse(params.body);
+  let mockList = Mock.mock({
+    'record|100': [
+      {
+        'id|+1': 1,
+        title: '@ctitle(10,20)',
+        author: '@cname()',
+        date: '@date()',
+      },
+    ],
+  }).record;
+
+  let pageList = mockList.filter((item, index) => {
+    if ((pageNum - 1) * pageSize <= index && pageNum * pageSize > index) {
+      return true;
+    }
+  });
+
+  return Mock.mock({
+    code: 20000,
+    data: {
+      record: pageList,
+      total: mockList.length,
+    },
   });
 });
