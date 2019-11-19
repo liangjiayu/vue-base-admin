@@ -75,3 +75,18 @@ Mock.mock('http://localhost:8080/news/list', (params) => {
     },
   };
 });
+
+Mock.mock('http://localhost:8080/news/add', (params) => {
+  let query = JSON.parse(params.body);
+  let id = newsListMock.length + 1;
+
+  newsListMock.unshift({
+    id: id,
+    ...query,
+  });
+
+  return {
+    code: 20000,
+    data: {},
+  };
+});

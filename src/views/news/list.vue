@@ -5,7 +5,7 @@
 
       <el-form :inline="true" :model="fliterParams">
         <el-form-item label="ID">
-          <el-input v-model.number="fliterParams.id" placeholder="ID" ></el-input>
+          <el-input v-model.number="fliterParams.id" placeholder="ID"></el-input>
         </el-form-item>
         <el-form-item label="日期">
           <el-date-picker
@@ -21,6 +21,7 @@
         <el-form-item>
           <el-button type="primary" @click="resetList">重置</el-button>
           <el-button type="primary" @click="onFliter">查询</el-button>
+          <el-button type="primary" @click="addNewsFormVisible = true">添加</el-button>
         </el-form-item>
       </el-form>
 
@@ -44,6 +45,35 @@
         class="app-base-pager"
       ></el-pagination>
     </div>
+
+    <el-dialog title="添加文章" :visible.sync="addNewsFormVisible">
+      <el-form
+        :model="addNewsForm"
+        :rules="rules"
+        label-width="80px"
+        style="width:500px;"
+        ref="newsForm"
+      >
+        <el-form-item label="日期" prop="date">
+          <el-date-picker
+            v-model="addNewsForm.date"
+            type="date"
+            placeholder="选择日期"
+            value-format="yyyy-MM-dd"
+          ></el-date-picker>
+        </el-form-item>
+        <el-form-item label="作者" prop="author">
+          <el-input v-model="addNewsForm.author"></el-input>
+        </el-form-item>
+        <el-form-item label="标题" prop="title">
+          <el-input v-model="addNewsForm.title" type="textarea"></el-input>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="addNewsFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="onAddNews">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -65,6 +95,19 @@ export default {
         id: '',
         date: '',
         author: '',
+      },
+      addNewsForm: {
+        date: '',
+        author: '',
+        title: '',
+      },
+      addNewsFormVisible: false,
+      rules: {
+        date: [{ required: true, message: '请输入日期', trigger: 'blur' }],
+        author: [
+          { required: true, message: '请输入作者名称', trigger: 'blur' },
+        ],
+        title: [{ required: true, message: '请输入标题', trigger: 'blur' }],
       },
     };
   },
@@ -104,7 +147,12 @@ export default {
     },
 
     onEdit(item) {
-      console.log(item);
+      this.$router.push({
+        path: 'detail',
+        query: {
+          id: item.row.id,
+        },
+      });
     },
 
     onDelete(item) {
@@ -116,6 +164,22 @@ export default {
         },
         () => {}
       );
+    },
+
+    onAddNews() {
+      this.$refs['newsForm'].validate((valid) => {
+        if (valid) {
+          this.$requestPost({
+            url: '/news/add',
+            data: this.addNewsForm,
+          }).then((res) => {
+            this.addNewsFormVisible = false;
+            this.resetList();
+          });
+        } else {
+          return false;
+        }
+      });
     },
   },
 };

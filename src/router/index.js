@@ -54,6 +54,11 @@ const baseRoutes = [
         name: 'list',
         component: () => import('../views/news/list.vue'),
       },
+      {
+        path: 'detail',
+        name: 'detail',
+        component: () => import('../views/news/detail.vue'),
+      },
     ],
   },
 
