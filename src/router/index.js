@@ -8,85 +8,30 @@ import layout from '../layout/layout.vue';
 // router modules
 import exampleRouter from './modules/example';
 
-const baseRoutes = [
-  {
-    path: '/login',
-    component: () => import('../views/login/index.vue'),
-  },
-
-  {
-    path: '/',
-    component: layout,
-    redirect: '/home',
-    children: [
-      {
-        path: 'home',
-        name: 'home',
-        component: () => import('../views/home/home.vue'),
-      },
-    ],
-  },
-
-  {
-    path: '/list',
-    component: layout,
-    children: [
-      {
-        path: 'base',
-        name: 'baseList',
-        component: () => import('../views/list/baseList.vue'),
-      },
-      {
-        path: 'general',
-        name: 'generalList',
-        component: () => import('../views/list/generalList.vue'),
-      },
-    ],
-  },
-
-  {
-    path: '/news',
-    component: layout,
-    redirect: '/news/list',
-    children: [
-      {
-        path: 'list',
-        name: 'list',
-        component: () => import('../views/news/list.vue'),
-      },
-      {
-        path: 'detail',
-        name: 'detail',
-        component: () => import('../views/news/detail.vue'),
-      },
-    ],
-  },
-
-  {
-    path: '/table',
-    component: layout,
-    children: [
-      {
-        path: 'base',
-        name: 'baseTable',
-        component: () => import('../views/table/baseTable.vue'),
-      },
-      {
-        path: 'general',
-        name: 'generalTable',
-        component: () => import('../views/table/generalTable.vue'),
-      },
-    ],
-  },
-  exampleRouter,
-];
-
-const createRouter = () => {
-  return new VueRouter({
-    routes: baseRoutes,
-  });
+let view = (path = '', component, meta = {}, children = []) => {
+  let redirect = '';
+  if (meta && meta.redirect) {
+    redirect = meta.redirect;
+  }
+  return {
+    path: path,
+    component: component,
+    meta: meta,
+    redirect: redirect,
+    children: children,
+  };
 };
 
-const router = createRouter();
+const baseRoutes = [
+  view('/login', () => import('../views/login/index.vue'), { title: '登录' }),
+  view('/news', layout, {}, [
+    // 新闻模块
+    view('list', () => import('../views/news/list.vue'), { title: '新闻-列表' }),
+  ]),
+];
+
+const router = new VueRouter({
+  routes: baseRoutes,
+});
 
 export default router;
