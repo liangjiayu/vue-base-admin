@@ -23,9 +23,13 @@ let view = (path = '', component, meta = {}, children = []) => {
 };
 
 const baseRoutes = [
+  view('/', layout, {}, [
+    // ----
+    view('home', () => import('../views/home/home.vue'), { title: '首页' }),
+  ]),
   view('/login', () => import('../views/login/index.vue'), { title: '登录' }),
   view('/news', layout, {}, [
-    // 新闻模块
+    // ----
     view('list', () => import('../views/news/list.vue'), { title: '新闻-列表' }),
   ]),
 ];

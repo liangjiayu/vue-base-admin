@@ -9,7 +9,7 @@ import App from './App.vue';
 import router from './router/index';
 import store from './store/index';
 import { requestPost } from './api/request';
-import '../mock';
+// import '../mock';
 
 Vue.use(ElementUI);
 

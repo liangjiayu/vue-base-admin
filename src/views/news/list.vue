@@ -1,7 +1,12 @@
 <template>
   <div>
     <div class="app-base-container">
-      <div class="app-base-title">新闻列表</div>
+      <div class="app-base-title">
+        <span>新闻列表</span>
+        <div class="right-inner">
+          <el-button type="primary" @click="addNewsFormVisible = true">添加</el-button>
+        </div>
+      </div>
 
       <el-form :inline="true" :model="fliterParams">
         <el-form-item label="ID">
@@ -21,7 +26,6 @@
         <el-form-item>
           <el-button type="primary" @click="resetList">重置</el-button>
           <el-button type="primary" @click="onFliter">查询</el-button>
-          <el-button type="primary" @click="addNewsFormVisible = true">添加</el-button>
         </el-form-item>
       </el-form>
 
@@ -32,8 +36,8 @@
         <el-table-column prop="title" label="标题"></el-table-column>
         <el-table-column label="操作" width="150">
           <template v-slot="scope">
-            <el-button size="mini" @click="onEdit(scope)">编辑</el-button>
-            <el-button size="mini" type="danger" @click="onDelete(scope)">删除</el-button>
+            <el-button type="text" @click="onEdit(scope)">编辑</el-button>
+            <el-button type="text" @click="onDelete(scope)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
