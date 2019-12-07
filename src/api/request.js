@@ -3,7 +3,7 @@ import { Message } from 'element-ui';
 import qs from 'qs';
 
 const service = axios.create({
-  baseURL: 'http://localhost:8080',
+  baseURL: '/mock/dev-api',
   withCredentials: true,
   // timeout: 5000,
 });
