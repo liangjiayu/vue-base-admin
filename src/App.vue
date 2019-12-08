@@ -5,19 +5,21 @@
 </template>
 
 <script>
-import service from './api/request.js';
+import request from './utils/request.js';
 
 export default {
   name: 'App',
   mounted() {
-    setTimeout(() => {
-      service({
-        url: '/goods/list',
-        method: 'post',
-      }).then((res) => {
+    request({
+      url: '/goods/list',
+    }).then(
+      (res) => {
         console.log(res);
-      });
-    }, 1000);
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   },
 };
 </script>

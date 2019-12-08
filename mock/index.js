@@ -6,7 +6,7 @@ const mocks = [
     type: 'post',
     response: (req, res) => {
       return {
-        code: 20000,
+        code: 30000,
         data: ['aaa', 'bbb'],
       };
     },
