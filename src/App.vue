@@ -11,7 +11,11 @@ export default {
   name: 'App',
   mounted() {
     request({
-      url: '/goods/list',
+      url: '/goods/detail',
+      data: {
+        id: '',
+        name: '4646',
+      },
     }).then(
       (res) => {
         console.log(res);

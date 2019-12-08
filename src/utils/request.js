@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { showLoading, showToast } from './utils';
+import { showLoading, showToast, validator } from './utils';
 
 const instanceAxios = axios.create({
   baseURL: '/mock/dev-api',
@@ -37,35 +37,56 @@ instanceAxios.interceptors.response.use(
   }
 );
 
-const request = (option = {}) => {
+const request = async (option = {}) => {
   let optionDefalut = {
     url: '',
     data: {},
     method: 'post',
     success: (res) => {},
     fail: (error) => {},
+    validator: {},
   };
   let _option = Object.assign({}, optionDefalut, option);
 
   let loading = showLoading();
 
-  return new Promise((resolve, reject) => {
-    instanceAxios({
-      url: _option.url,
-      method: _option.method,
-      data: _option.data,
-    })
-      .then((res) => {
-        loading.close();
-        _option.success(res);
-        resolve(res);
+  let canEmit = true;
+
+  if (Object.keys(_option.validator).length > 0) {
+    await validator(_option.data, _option.validator)
+      .then(() => {
+        canEmit = true;
       })
-      .catch((error) => {
+      .catch(({ errors, fields }) => {
+        canEmit = false;
         loading.close();
-        _option.fail(error);
-        reject(error);
+        showToast({
+          message: errors[0].message,
+          type: 'error',
+        });
+        return Promise.reject(errors);
       });
-  });
+  }
+
+  if (canEmit) {
+    return new Promise((resolve, reject) => {
+      instanceAxios({
+        url: _option.url,
+        method: _option.method,
+        data: _option.data,
+      })
+        .then((res) => {
+          loading.close();
+          _option.success(res);
+          resolve(res);
+        })
+        .catch((error) => {
+          loading.close();
+          _option.fail(error);
+          reject(error);
+        });
+    });
+  }
 };
 
 export default request;

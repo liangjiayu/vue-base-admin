@@ -1,3 +1,4 @@
+import Schema from 'async-validator';
 import { Message } from 'element-ui';
 import { Loading } from 'element-ui';
 
@@ -25,4 +26,10 @@ const showLoading = (option = {}) => {
   return loadingInstance;
 };
 
-export { showToast, showLoading };
+// https://github.com/yiminghe/async-validator
+const validator = (source = {}, rules = {}, callback = () => {}) => {
+  let schemaInstance = new Schema(rules);
+  return schemaInstance.validate(source, callback);
+};
+
+export { showToast, showLoading, validator };
