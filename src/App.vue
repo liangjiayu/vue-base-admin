@@ -5,25 +5,15 @@
 </template>
 
 <script>
-import request from './utils/request.js';
-
 export default {
   name: 'App',
   mounted() {
-    request({
-      url: '/goods/detail',
-      data: {
-        id: '',
-        name: '4646',
-      },
-    }).then(
-      (res) => {
-        console.log(res);
-      },
-      (error) => {
-        console.log(error);
-      }
-    );
+    this.JY.request({
+      url: '/goods/list',
+      data: {},
+    }).then((res) => {
+      console.log(res);
+    });
   },
 };
 </script>

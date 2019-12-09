@@ -8,10 +8,17 @@ import './styles/index.scss'; //global css
 import App from './App.vue';
 import router from './router/index';
 import store from './store/index';
-import './utils/utils';
+import request from './utils/request';
+import { showLoading, showToast, validator } from './utils/utils';
 
 Vue.use(ElementUI);
 
+Vue.prototype.JY = {
+  request,
+  showLoading,
+  showToast,
+  validator,
+};
 Vue.config.productionTip = false;
 
 new Vue({
