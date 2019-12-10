@@ -4,6 +4,7 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 import layout from '../layout/layout.vue';
+import BlankLayout from '../layout/BlankLayout.vue';
 
 // router modules
 import exampleRouter from './modules/example';
@@ -23,14 +24,10 @@ let view = (path = '', component, meta = {}, children = []) => {
 };
 
 const baseRoutes = [
-  view('/', layout, {}, [
-    // ----
-    view('home', () => import('../views/home/home.vue'), { title: '首页' }),
-  ]),
-  view('/login', () => import('../views/login/index.vue'), { title: '登录' }),
-  view('/news', layout, {}, [
-    // ----
-    view('list', () => import('../views/news/list.vue'), { title: '新闻-列表' }),
+  view('/login', BlankLayout, { title: '登录模块' }, [
+    //
+    view('login', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
+    view('register', () => import('../views/login/register.vue'), { title: '登录模块-注册' }),
   ]),
 ];
 

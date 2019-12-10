@@ -7,14 +7,7 @@
 <script>
 export default {
   name: 'App',
-  mounted() {
-    this.JY.request({
-      url: '/goods/list',
-      data: {},
-    }).then((res) => {
-      console.log(res);
-    });
-  },
+  mounted() {},
 };
 </script>
 
