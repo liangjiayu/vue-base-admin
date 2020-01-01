@@ -1,3 +1,46 @@
+function _get(object = {}, path, defaultValue) {
+  if (!object || !path) {
+    return;
+  }
+  let result = undefined;
+  let pathArray = path.split('.');
+
+  pathArray.find((key, index) => {
+    if (!object) {
+      return true;
+    }
+    object = object[key];
+  });
+
+  result = object ? object : defaultValue;
+  return result;
+}
+
+function _set(object = {}, path, value) {
+  if (!path) {
+    return object;
+  }
+  if (value === undefined) {
+    return object;
+  }
+
+  let nested = object;
+
+  let pathArray = path.split('.');
+  pathArray.map((key, index) => {
+    if (index === pathArray.length - 1) {
+      nested[key] = value;
+      return;
+    }
+    if (!nested[key]) {
+      nested[key] = {};
+    }
+    nested = nested[key];
+  });
+
+  return object;
+}
+
 class Storage {
   constructor(key) {
     this.key = key;
@@ -19,33 +62,19 @@ class Storage {
     }
   }
 
-  get(key = '') {
-    if (!key) {
+  get(path = '', defaultValue) {
+    if (!path) {
       return undefined;
     }
-    if (key in this.baseData) {
-      return this.baseData[key];
-    } else {
-      return undefined;
-    }
+    return _get(this.baseData, path, defaultValue);
   }
 
-  set(key = '', value) {
-    if (!key || !value) {
+  set(path = '', value) {
+    if (!path || !value) {
       return;
     }
-    this.baseData[key] = value;
+    this.baseData = _set(this.baseData, path, value);
     window.localStorage.setItem(this.key, JSON.stringify(this.baseData));
-  }
-
-  remove(key = '') {
-    if (!key) {
-      return undefined;
-    }
-    if (key in this.baseData) {
-      delete this.baseData[key];
-      window.localStorage.setItem(this.key, JSON.stringify(this.baseData));
-    }
   }
 
   clearAll() {
@@ -54,6 +83,4 @@ class Storage {
   }
 }
 
-const aaa = new Storage('iamman');
-
-window.$aaa = aaa;
+window.$Storage = new Storage('baseAdmin');
