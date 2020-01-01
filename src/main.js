@@ -10,6 +10,7 @@ import router from './router/index';
 import store from './store/index';
 import request from './utils/request';
 import { showLoading, showToast, validator } from './utils/utils';
+import './utils/storage';
 
 Vue.use(ElementUI);
 
