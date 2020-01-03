@@ -17,7 +17,11 @@ export default {
   computed: {},
   watch: {},
   mounted() {},
-  methods: {}
+  methods: {
+    updatedata () {
+      console.log(456789)
+    }
+  }
 };
 </script>
 

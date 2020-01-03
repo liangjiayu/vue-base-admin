@@ -1,4 +1,5 @@
 const chokidar = require('chokidar');
+const bodyParser = require('body-parser');
 const path = require('path');
 
 const mockDir = path.join(process.cwd(), 'mock');
@@ -30,11 +31,20 @@ function unregisterRoutes() {
 module.exports = (app) => {
   require('@babel/register');
 
+  // parse app.body
+  // https://expressjs.com/en/4x/api.html#req.body
+  app.use(bodyParser.json());
+  app.use(
+    bodyParser.urlencoded({
+      extended: true,
+    })
+  );
+
   let mockRoutes = initRoutes(app);
 
   let mockRoutesLength = mockRoutes.mockRoutesLength;
   let mockStartIndex = mockRoutes.mockStartIndex;
-  
+
   chokidar
     .watch(mockDir, {
       ignored: '/mock-server/',

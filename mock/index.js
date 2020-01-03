@@ -1,34 +1,17 @@
 import Mock from 'mockjs';
+import user from './user';
 
-const mocks = [
-  {
-    url: '/goods/list',
-    type: 'post',
-    response: (req, res) => {
-      return {
-        code: 30000,
-        data: ['aaa', 'bbb', 'www'],
-      };
-    },
-  },
-  {
-    url: '/goods/detail',
-    type: 'post',
-    response: (req, res) => {
-      return {
-        code: 20000,
-        data: ['cccc', 'dddd'],
-      };
-    },
-  },
-];
+const mocks = [...user];
 
 const fakeResponse = (url, type, response) => {
   return {
     url: `/mock/dev-api${url}`,
     type: type || 'post',
     response: (req, res) => {
-      res.json(response(req, res));
+      // 异步延迟模拟
+      setTimeout(() => {
+        res.json(response(req, res));
+      }, 1000);
     },
   };
 };

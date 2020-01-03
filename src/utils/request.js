@@ -1,17 +1,19 @@
 import axios from 'axios';
+import { CONFIG } from '../configs/index';
 import { showLoading, showToast, validator } from './utils';
 
 const instanceAxios = axios.create({
-  baseURL: '/mock/dev-api',
+  baseURL: CONFIG.API_URL,
   withCredentials: true,
 });
 
+// errors type  1000验证  2000后端程序错误  4000网络错误
 instanceAxios.interceptors.request.use(
   (config) => {
     return config;
   },
   (error) => {
-    return Promise.reject(error);
+    return Promise.reject({ type: 4000, data: error });
   }
 );
 
@@ -25,7 +27,7 @@ instanceAxios.interceptors.response.use(
         message: res.message || '服务器错误',
         type: 'error',
       });
-      return Promise.reject(res);
+      return Promise.reject({ type: 2000, data: res });
     }
   },
   (error) => {
@@ -33,7 +35,7 @@ instanceAxios.interceptors.response.use(
       message: error,
       type: 'error',
     });
-    return Promise.reject(error);
+    return Promise.reject({ type: 4000, data: error });
   }
 );
 
@@ -42,13 +44,17 @@ const request = async (option = {}) => {
     url: '',
     data: {},
     method: 'post',
+    hideLoading: false,
     success: (res) => {},
     fail: (error) => {},
     validator: {},
   };
   let _option = Object.assign({}, optionDefalut, option);
 
-  let loading = showLoading();
+  let loading = {};
+  if (!_option.hideLoading) {
+    loading = showLoading();
+  }
 
   let canEmit = true;
 
@@ -58,13 +64,15 @@ const request = async (option = {}) => {
         canEmit = true;
       })
       .catch(({ errors, fields }) => {
+        if (!_option.hideLoading) {
+          loading.close();
+        }
         canEmit = false;
-        loading.close();
         showToast({
           message: errors[0].message,
           type: 'error',
         });
-        return Promise.reject(errors);
+        return Promise.reject({ type: 1000, data: { errors, fields } });
       });
   }
 
@@ -76,12 +84,16 @@ const request = async (option = {}) => {
         data: _option.data,
       })
         .then((res) => {
-          loading.close();
+          if (!_option.hideLoading) {
+            loading.close();
+          }
           _option.success(res);
           resolve(res);
         })
         .catch((error) => {
-          loading.close();
+          if (!_option.hideLoading) {
+            loading.close();
+          }
           _option.fail(error);
           reject(error);
         });

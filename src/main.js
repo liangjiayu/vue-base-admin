@@ -20,6 +20,7 @@ Vue.prototype.JY = {
   showToast,
   validator,
 };
+
 Vue.config.productionTip = false;
 
 new Vue({

@@ -92,9 +92,34 @@ export default {
   methods: {
     onLogin() {
       let formName = `${this.type}Form`;
+      let formData = {};
+      switch (this.type) {
+        case 'name':
+          formData = this.nameForm;
+          break;
+        case 'phone':
+          formData = this.phoneForm;
+          break;
+        default:
+          formData = {};
+          break;
+      }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('登录');
+          this.JY.request({
+            url: '/user/login',
+            data: formData,
+            // validator: {
+            //   aaa: { required: true },
+            // },
+          }).then(
+            (res) => {
+              console.log(res);
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
         }
       });
     },
