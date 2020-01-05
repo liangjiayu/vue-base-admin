@@ -3,10 +3,12 @@ import Mock from 'mockjs';
 const users = {
   admin: {
     rolesType: 1000,
+    role: 'admin',
     userName: '超级管理员',
   },
   member: {
     rolesType: 2000,
+    role: 'member',
     userName: '普通成员',
   },
 };

@@ -26,6 +26,7 @@ Vue.prototype.JY = {
 
 Vue.prototype._Storage = _Storage;
 Vue.prototype.CONFIG = CONFIG;
+Vue.prototype._log = console.log;
 
 Vue.config.productionTip = false;
 

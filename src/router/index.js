@@ -30,7 +30,7 @@ const baseRoutes = [
     view('home-1', () => import('../views/home/home.vue'), { title: '首页模块-首页', permission: { auth: true, role: 'member' } }),
   ]),
 
-  view('/error', BlankLayout, { title: '异常', redirect: '/error/404', layout: 'PanelLayout' }, [
+  view('/error', BlankLayout, { title: '异常', redirect: '/error/404', layout: 'PanelLayout', permission: { auth: true } }, [
     view('204', () => import('../views/error/204.vue'), { title: '204' }),
     view('403', () => import('../views/error/403.vue'), { title: '403' }),
     view('404', () => import('../views/error/404.vue'), { title: '404' }),

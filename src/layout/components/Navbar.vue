@@ -7,14 +7,14 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-dropdown trigger="click" class="user-panel-box">
+    <el-dropdown trigger="click" class="user-panel-box" size="small">
       <div class="user-panel-btn">
         <img src="https://liangjiayu.github.io/uploads/avatar.png" alt />
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item>设置</el-dropdown-item>
-        <el-dropdown-item>退出</el-dropdown-item>
+        <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </div>
@@ -22,6 +22,8 @@
 
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'Navbar',
   components: {},
@@ -42,6 +44,8 @@ export default {
     this.getBreadcrumb();
   },
   methods: {
+    ...mapMutations('user', ['setUserInfo']),
+
     getBreadcrumb() {
       let breadList = this.$route.matched.filter((item) => {
         if (item.meta && item.meta.title) {
@@ -49,6 +53,11 @@ export default {
         }
       });
       this.breadList = breadList;
+    },
+
+    logout() {
+      this.setUserInfo(null);
+      this.$router.replace('/login');
     },
   },
 };

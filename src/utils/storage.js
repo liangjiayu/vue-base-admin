@@ -72,7 +72,7 @@ class Storage {
   }
 
   set(path = '', value) {
-    if (!path || !value) {
+    if (!path) {
       return;
     }
     this.baseData = _set(this.baseData, path, value);
