@@ -1,5 +1,5 @@
 const state = {
-  userInfo: {},
+  userInfo: window._Storage.get('userInfo', null),
 };
 
 const mutations = {
