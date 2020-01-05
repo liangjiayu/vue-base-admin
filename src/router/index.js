@@ -24,6 +24,9 @@ const baseRoutes = [
   view('/login', BlankLayout, { title: '登录模块', redirect: '/login/login' }, [
     view('login', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
   ]),
+  view('/', BlankLayout, { title: '首页', redirect: '/home', layout: 'PanelLayout' }, [
+    view('home', () => import('../views/home/home.vue'), { title: '首页模块-首页' }),
+  ]),
 ];
 
 const router = new VueRouter({

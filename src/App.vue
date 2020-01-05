@@ -31,9 +31,9 @@ export default {
           }
         }
         if (route.meta && route.meta.title) {
-          document.title = route.meta.title || '中后台系统';
+          document.title = `${route.meta.title}_${this.CONFIG.PROJECT_TITLE}`;
         } else {
-          document.title = '中后台系统';
+          document.title = this.CONFIG.PROJECT_TITLE;
         }
         this.LayoutId = layoutId;
       },

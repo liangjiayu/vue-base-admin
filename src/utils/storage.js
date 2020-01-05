@@ -1,3 +1,5 @@
+import CONFIG from '../configs/index';
+
 function _get(object = {}, path, defaultValue) {
   if (!object || !path) {
     return;
@@ -83,4 +85,7 @@ class Storage {
   }
 }
 
-window.$Storage = new Storage('baseAdmin');
+let _Storage = new Storage(CONFIG.STORAGE_KEY);
+
+window._Storage = _Storage;
+export default _Storage;

@@ -1,21 +1,15 @@
 const state = {
-  userInfo: {
-    name: 'liangjiayu',
-    role: 'member',
-  },
+  userInfo: {},
 };
 
 const mutations = {
-  UPDATE_USER_INFO: (state, payload) => {
-    state.userInfo = payload;
+  setUserInfo(state, userInfo) {
+    state.userInfo = userInfo;
+    window._Storage.set('userInfo', userInfo);
   },
 };
 
-const actions = {
-  updateUserInfo({ commit }, payload) {
-    commit('UPDATE_USER_INFO', payload);
-  },
-};
+const actions = {};
 
 export default {
   namespaced: true,

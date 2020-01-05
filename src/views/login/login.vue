@@ -58,6 +58,8 @@
 </template>
 
 <script>
+import { mapMutations } from 'vuex';
+
 export default {
   name: 'login',
   components: {},
@@ -90,6 +92,8 @@ export default {
   watch: {},
   mounted() {},
   methods: {
+    ...mapMutations('user', ['setUserInfo']),
+
     onLogin() {
       let formName = `${this.type}Form`;
       let formData = {};
@@ -109,16 +113,12 @@ export default {
           this.JY.request({
             url: '/user/login',
             data: formData,
-            // validator: {
-            //   aaa: { required: true },
-            // },
           }).then(
             (res) => {
-              console.log(res);
+              this.setUserInfo(res.data);
+              this.$router.replace('/');
             },
-            (error) => {
-              console.log(error);
-            }
+            (error) => {}
           );
         }
       });

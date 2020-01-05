@@ -10,7 +10,10 @@ import router from './router/index';
 import store from './store/index';
 import request from './utils/request';
 import { showLoading, showToast, validator } from './utils/utils';
-import './utils/storage';
+import _Storage from './utils/storage';
+import CONFIG from './configs/index';
+
+import './permission';
 
 Vue.use(ElementUI);
 
@@ -20,6 +23,9 @@ Vue.prototype.JY = {
   showToast,
   validator,
 };
+
+Vue.prototype._Storage = _Storage;
+Vue.prototype.CONFIG = CONFIG;
 
 Vue.config.productionTip = false;
 
