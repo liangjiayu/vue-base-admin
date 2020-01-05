@@ -1,7 +1,7 @@
 <template>
   <div class="app-layout-con">
     <Sidebar class="app-sidebar-con"></Sidebar>
-    
+
     <div class="app-main-con">
       <div class="app-navbar-box sticky">
         <Navbar></Navbar>
@@ -15,16 +15,16 @@
 
 
 <script>
-import AppMain from "./components/AppMain";
-import Navbar from "./components/Navbar";
-import Sidebar from "./components/Sidebar";
+import AppMain from './components/AppMain';
+import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 
 export default {
-  name: "layout",
+  name: 'PanelLayout',
   components: {
     AppMain,
     Navbar,
-    Sidebar
+    Sidebar,
   },
   mixins: [],
   props: {},
@@ -34,7 +34,7 @@ export default {
   computed: {},
   watch: {},
   mounted() {},
-  methods: {}
+  methods: {},
 };
 </script>
 

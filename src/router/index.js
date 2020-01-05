@@ -1,13 +1,10 @@
+// ***  vue的路由配置文件 ***
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import layout from '../layout/layout.vue';
 import BlankLayout from '../layout/BlankLayout.vue';
-
-// router modules
-import exampleRouter from './modules/example';
 
 let view = (path = '', component, meta = {}, children = []) => {
   let redirect = '';
@@ -24,10 +21,8 @@ let view = (path = '', component, meta = {}, children = []) => {
 };
 
 const baseRoutes = [
-  view('/login', BlankLayout, { title: '登录模块' }, [
-    //
+  view('/login', BlankLayout, { title: '登录模块', redirect: '/login/login' }, [
     view('login', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
-    view('register', () => import('../views/login/register.vue'), { title: '登录模块-注册' }),
   ]),
 ];
 
