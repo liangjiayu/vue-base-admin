@@ -15,7 +15,9 @@ import { showLoading, showToast, validator } from './utils/utils';
 
 import './permission';
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, {
+  size: 'small',
+});
 
 Vue.prototype.JY = {
   request,
