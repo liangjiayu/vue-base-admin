@@ -21,20 +21,25 @@ let view = (path = '', component, meta = {}, children = []) => {
 };
 
 const baseRoutes = [
-  view('/login', BlankLayout, { title: '登录模块', redirect: '/login/login' }, [
+  view('/login', BlankLayout, { title: '登录模块', redirect: '/login/login', permission: { auth: false } }, [
     view('login', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
   ]),
 
-  view('/', BlankLayout, { title: '首页', redirect: '/home', layout: 'PanelLayout', permission: { auth: true } }, [
+  view('/', BlankLayout, { title: '首页', redirect: '/home', layout: 'PanelLayout' }, [
     view('home', () => import('../views/home/home.vue'), { title: '首页模块-首页' }),
     view('home-1', () => import('../views/home/home.vue'), { title: '首页模块-首页', permission: { auth: true, role: 'member' } }),
   ]),
 
-  view('/permission', BlankLayout, { title: '权限管理', redirect: '/permission/role', layout: 'PanelLayout', permission: { auth: true } }, [
+  view('/permission', BlankLayout, { title: '权限管理', redirect: '/permission/role', layout: 'PanelLayout' }, [
     view('role', () => import('../views/permission/role.vue'), { title: '权限管理-角色管理' }),
   ]),
 
-  view('/error', BlankLayout, { title: '异常', redirect: '/error/404', layout: 'PanelLayout', permission: { auth: true } }, [
+  view('/table', BlankLayout, { title: '表格', redirect: '/table/complex-table', layout: 'PanelLayout' }, [
+    view('complex-table', () => import('../views/table/complex-table.vue'), { title: '综合表格' }),
+    view('edit-table', () => import('../views/table/edit-table.vue'), { title: '编辑表格' }),
+  ]),
+
+  view('/error', BlankLayout, { title: '异常', redirect: '/error/404', layout: 'PanelLayout' }, [
     view('204', () => import('../views/error/204.vue'), { title: '204' }),
     view('403', () => import('../views/error/403.vue'), { title: '403' }),
     view('404', () => import('../views/error/404.vue'), { title: '404' }),

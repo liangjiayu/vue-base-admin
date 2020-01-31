@@ -69,6 +69,20 @@ const sideMenuConfig = [
       },
     ],
   },
+  {
+    name: '表格',
+    path: '/table',
+    children: [
+      {
+        name: '综合表格',
+        path: '/table/complex-table',
+      },
+      {
+        name: '编辑表格',
+        path: '/table/edit-table',
+      },
+    ],
+  },
 ];
 
 export { sideMenuConfig };

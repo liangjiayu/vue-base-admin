@@ -13,9 +13,11 @@ router.beforeEach(async (to, from, next) => {
     }
   }
 
-  // 无权限限制的页面
+  // 权限对象为空 添加默认值 默认需要登录
   if (!permission) {
-    return next();
+    permission = {
+      auth: true,
+    };
   }
 
   // 角色权限限制的页面
@@ -37,5 +39,7 @@ router.beforeEach(async (to, from, next) => {
     } else {
       return next({ path: '/login', replace: true });
     }
+  } else {
+    return next();
   }
 });
