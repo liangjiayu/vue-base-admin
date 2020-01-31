@@ -1,7 +1,8 @@
 import Mock from 'mockjs';
 import user from './user';
+import table from './table';
 
-const mocks = [...user];
+const mocks = [...user, ...table];
 
 const fakeResponse = (url, type, response) => {
   return {
