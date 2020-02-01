@@ -1,6 +1,6 @@
 import Mock from 'mockjs';
 
-const mockList = [];
+let mockList = [];
 
 for (let index = 0; index < 100; index++) {
   mockList.push(
@@ -65,6 +65,46 @@ export default [
       return {
         code: 20000,
         data: body,
+      };
+    },
+  },
+  {
+    url: '/table/delete',
+    type: 'post',
+    response: (req, res) => {
+      let id = req.body.id;
+      if (!id) {
+        return;
+      }
+      mockList = mockList.filter((item) => {
+        if (item.id !== id) {
+          return true;
+        }
+      });
+      return {
+        code: 20000,
+        data: {},
+      };
+    },
+  },
+  {
+    url: '/table/update',
+    type: 'post',
+    response: (req, res) => {
+      let id = req.body.id;
+      if (!id) {
+        return;
+      }
+      mockList.map((item, index) => {
+        if (item.id === id) {
+          mockList[index] = {
+            ...req.body,
+          };
+        }
+      });
+      return {
+        code: 20000,
+        data: {},
       };
     },
   },

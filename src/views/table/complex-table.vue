@@ -7,16 +7,11 @@
           <el-option v-for="item in [1,2,3]" :key="item" :label="item" :value="item"></el-option>
         </el-select>-->
         <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
-        <el-button
-          class="filter-item"
-          type="primary"
-          icon="el-icon-edit"
-          @click="dialogFormVisible = true"
-        >添加</el-button>
+        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
         <el-button class="filter-item" type="primary" icon="el-icon-download">导出</el-button>
       </div>
 
-      <el-table :data="tableData.list" border>
+      <el-table :data="tableData.list" border v-loading="tableLoading">
         <el-table-column prop="id" label="序号" width="100"></el-table-column>
         <el-table-column prop="time" label="日期" width="120"></el-table-column>
         <el-table-column prop="title" label="标题"></el-table-column>
@@ -36,11 +31,11 @@
             <el-tag v-if="row.status==='deleted'" type="danger">{{row.status}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column label="操作" width="240" align="center">
+        <el-table-column label="操作" width="240" align="center" v-slot="{row}">
           <template>
-            <el-button type="primary">编辑</el-button>
+            <el-button type="primary" @click="handleUpdate(row)">编辑</el-button>
             <el-button type="success">发布</el-button>
-            <el-button type="danger">删除</el-button>
+            <el-button type="danger" @click="handleDelete(row)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -109,6 +104,7 @@ export default {
         list: [],
         total: 0,
       },
+      tableLoading: false,
       tableQuery: {
         pageSize: 15,
         pageNum: 1,
@@ -117,6 +113,7 @@ export default {
       tableDataStatus: ['published', 'draft', 'deleted'],
 
       dialogFormVisible: false,
+      dialogFormType: 'create', // create update
       dialogFormRules: {
         time: [{ required: true, trigger: 'change' }],
         title: [{ required: true, trigger: 'change' }],
@@ -125,6 +122,7 @@ export default {
         status: [{ required: true, trigger: 'change' }],
       },
       dialogFormData: {
+        id: undefined,
         time: '',
         title: '',
         author: '',
@@ -139,10 +137,13 @@ export default {
   },
   methods: {
     getTableData() {
+      this.tableLoading = true;
       this.JY.request({
         url: '/table/list',
         data: this.tableQuery,
+        hideLoading: true,
       }).then((res) => {
+        this.tableLoading = false;
         this.tableData.list = res.data.list;
         this.tableData.total = res.data.total;
       });
@@ -153,11 +154,63 @@ export default {
       this.getTableData();
     },
 
+    handleDelete(row) {
+      this.$confirm('是否要删除该数据?', '提示', {}).then(
+        () => {
+          this.JY.request({
+            url: '/table/delete',
+            data: {
+              id: row.id,
+            },
+          }).then((res) => {
+            this.$message({
+              type: 'success',
+              message: '删除成功!',
+            });
+            this.getTableData();
+          });
+        },
+        () => {
+          this.$message({
+            type: 'info',
+            message: '已取消删除',
+          });
+        }
+      );
+    },
+
+    handleCreate() {
+      this.dialogFormVisible = true;
+      this.dialogFormType = 'create';
+      this.dialogFormData = {
+        id: undefined,
+        time: '',
+        title: '',
+        author: '',
+        type: '',
+        rank: 1,
+        status: '',
+      };
+    },
+
+    handleUpdate(row) {
+      this.dialogFormVisible = true;
+      this.dialogFormType = 'update';
+      this.dialogFormData = { ...row };
+    },
+
     confirmDialogForm() {
       this.$refs['dialogForm'].validate((valid) => {
         if (valid) {
+          let postUrl = '';
+          if (this.dialogFormType === 'create') {
+            postUrl = '/table/create';
+          }
+          if (this.dialogFormType === 'update') {
+            postUrl = '/table/update';
+          }
           this.JY.request({
-            url: '/table/create',
+            url: postUrl,
             data: this.dialogFormData,
           }).then((res) => {
             this.dialogFormVisible = false;
