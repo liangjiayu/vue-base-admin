@@ -5,13 +5,13 @@ const mockList = [];
 for (let index = 0; index < 100; index++) {
   mockList.push(
     Mock.mock({
-      id: '@id',
+      id: index + 1,
       time: '@date',
       author: '@first',
       reviewer: '@first',
       title: '@title(5, 10)',
       rank: '@integer(1, 3)',
-      'type|1': ['CN', 'US', 'JP', 'EU'],
+      'type|1': ['CHINA', 'USA', 'JAPAN'],
       'status|1': ['published', 'draft', 'deleted'],
     })
   );
@@ -50,6 +50,21 @@ export default [
           list: pageList,
           total: mockList.length,
         },
+      };
+    },
+  },
+  {
+    url: '/table/create',
+    type: 'post',
+    response: (req, res) => {
+      let body = req.body;
+      mockList.unshift({
+        id: mockList.length + 1,
+        ...body,
+      });
+      return {
+        code: 20000,
+        data: body,
       };
     },
   },

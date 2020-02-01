@@ -12,7 +12,7 @@ const fakeResponse = (url, type, response) => {
       // 异步延迟模拟
       setTimeout(() => {
         res.json(response(req, res));
-      }, 1000);
+      }, 500);
     },
   };
 };
