@@ -26,13 +26,19 @@ export default [
       let { pageSize = 10, pageNum = 1 } = query;
 
       let newsList = mockList.filter((item, index) => {
-        if (query.id && query.id !== item.id) {
-          return false;
-        }
         if (query.date && query.date !== item.date) {
           return false;
         }
-        if (query.author && query.author !== item.author) {
+        if (query.author && !item.author.includes(query.author)) {
+          return false;
+        }
+        if (query.rank && query.rank !== item.rank) {
+          return false;
+        }
+        if (query.type && query.type !== item.type) {
+          return false;
+        }
+        if (query.status && query.status !== item.status) {
           return false;
         }
         return true;
@@ -48,7 +54,7 @@ export default [
         code: 20000,
         data: {
           list: pageList,
-          total: mockList.length,
+          total: newsList.length,
         },
       };
     },

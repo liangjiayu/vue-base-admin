@@ -2,13 +2,50 @@
   <div>
     <div class="app-base-container">
       <div class="filter-container">
-        <el-input class="filter-item" placeholder="标题" style="width:200px;margin-right:10px;"></el-input>
-        <!-- <el-select class="filter-item" placeholder="等级" style="width:100px;margin-right:10px;">
+        <el-date-picker
+          v-model="tableQuery.date"
+          type="date"
+          placeholder="选择日期"
+          value-format="yyyy-MM-dd"
+          class="filter-item"
+        ></el-date-picker>
+        <el-input
+          v-model="tableQuery.author"
+          placeholder="作者名称"
+          style="width:200px;"
+          class="filter-item"
+        ></el-input>
+        <el-select
+          v-model="tableQuery.rank"
+          class="filter-item"
+          placeholder="等级"
+          style="width:100px;"
+          clearable
+        >
           <el-option v-for="item in [1,2,3]" :key="item" :label="item" :value="item"></el-option>
-        </el-select>-->
-        <el-button class="filter-item" type="primary" icon="el-icon-search">搜索</el-button>
-        <el-button class="filter-item" type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
-        <el-button class="filter-item" type="primary" icon="el-icon-download">导出</el-button>
+        </el-select>
+        <el-select
+          v-model="tableQuery.type"
+          class="filter-item"
+          placeholder="类型"
+          style="width:100px;"
+          clearable
+        >
+          <el-option v-for="item in tableDataType" :key="item" :label="item" :value="item"></el-option>
+        </el-select>
+        <el-select
+          v-model="tableQuery.status"
+          class="filter-item"
+          placeholder="状态"
+          style="width:100px;"
+          clearable
+        >
+          <el-option v-for="item in tableDataStatus" :key="item" :label="item" :value="item"></el-option>
+        </el-select>
+        <el-button type="primary" icon="el-icon-search" @click="getTableData">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="resetTableData">重置</el-button>
+        <el-button type="primary" icon="el-icon-edit" @click="handleCreate">添加</el-button>
+        <el-button type="primary" icon="el-icon-download">导出</el-button>
       </div>
 
       <el-table :data="tableData.list" border v-loading="tableLoading">
@@ -96,6 +133,7 @@
 </template>
 
 <script>
+// 基础的列表页面，功能包括 增删改查
 export default {
   name: 'complex-table',
   data() {
@@ -108,6 +146,11 @@ export default {
       tableQuery: {
         pageSize: 15,
         pageNum: 1,
+        date: '',
+        author: '',
+        type: '',
+        rank: '',
+        status: '',
       },
       tableDataType: ['CHINA', 'USA', 'JAPAN'],
       tableDataStatus: ['published', 'draft', 'deleted'],
@@ -147,6 +190,19 @@ export default {
         this.tableData.list = res.data.list;
         this.tableData.total = res.data.total;
       });
+    },
+
+    resetTableData() {
+      this.tableQuery = {
+        pageSize: 15,
+        pageNum: 1,
+        date: '',
+        author: '',
+        type: '',
+        rank: '',
+        status: '',
+      };
+      this.getTableData();
     },
 
     changePager(i) {
@@ -229,6 +285,7 @@ export default {
   .filter-item {
     display: inline-block;
     vertical-align: top;
+    margin-right: 10px;
     margin-bottom: 10px;
   }
 }
