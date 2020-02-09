@@ -78,8 +78,8 @@ const sideMenuConfig = [
         path: '/table/complex-table',
       },
       {
-        name: '编辑表格',
-        path: '/table/edit-table',
+        name: '拖拽表格',
+        path: '/table/drag-table',
       },
     ],
   },

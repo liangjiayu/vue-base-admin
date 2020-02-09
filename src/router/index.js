@@ -36,6 +36,7 @@ const baseRoutes = [
 
   view('/table', BlankLayout, { title: '表格', redirect: '/table/complex-table', layout: 'PanelLayout' }, [
     view('complex-table', () => import('../views/table/complex-table.vue'), { title: '综合表格' }),
+    view('drag-table', () => import('../views/table/drag-table.vue'), { title: '拖拽表格' }),
     view('edit-table', () => import('../views/table/edit-table.vue'), { title: '编辑表格' }),
   ]),
 
