@@ -3,7 +3,7 @@
     <Sidebar class="app-sidebar-con"></Sidebar>
 
     <div class="app-main-con">
-      <div class="app-navbar-box sticky">
+      <div class="app-navbar-box">
         <Navbar></Navbar>
       </div>
       <div class="app-main-box">
