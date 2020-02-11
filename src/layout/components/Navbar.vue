@@ -7,21 +7,34 @@
       </el-breadcrumb-item>
     </el-breadcrumb>
 
-    <el-dropdown trigger="click" class="user-panel-box" size="small">
-      <div class="user-panel-btn">
-        <img src="https://liangjiayu.github.io/uploads/avatar.png" alt />
-        <i class="el-icon-caret-bottom"></i>
-      </div>
-      <el-dropdown-menu slot="dropdown">
-        <el-dropdown-item>设置</el-dropdown-item>
-        <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
-      </el-dropdown-menu>
-    </el-dropdown>
+    <div class="navbar-right-box">
+      <el-tooltip content="全屏">
+        <div class="box" @click="setFullScreen">
+          <i class="el-icon-full-screen"></i>
+        </div>
+      </el-tooltip>
+
+      <el-tooltip class="box" content="布局大小">
+        <i class="el-icon-set-up"></i>
+      </el-tooltip>
+
+      <el-dropdown trigger="click" class="user-panel-box" size="small">
+        <div class="user-panel-btn">
+          <img src="https://liangjiayu.github.io/uploads/avatar.png" alt />
+          <i class="el-icon-caret-bottom"></i>
+        </div>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item>设置</el-dropdown-item>
+          <el-dropdown-item @click.native="logout">退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
+    </div>
   </div>
 </template>
 
 
 <script>
+import screenfull from 'screenfull';
 import { mapMutations } from 'vuex';
 
 export default {
@@ -59,6 +72,10 @@ export default {
       this.setUserInfo(null);
       this.$router.replace('/login');
     },
+
+    setFullScreen() {
+      screenfull.toggle();
+    },
   },
 };
 </script>
@@ -66,8 +83,8 @@ export default {
 
 <style lang="scss" scoped>
 .navbar-wrap-con {
-  position: relative;
   display: flex;
+  justify-content: space-between;
   height: 100%;
   overflow: hidden;
   background: #fff;
@@ -75,18 +92,29 @@ export default {
 }
 
 .navbar-breadcrumb {
-  display: block;
   margin-left: 10px;
   height: 50px;
   line-height: 50px;
   font-size: 14px;
 }
 
+.navbar-right-box {
+  display: block;
+  .box {
+    display: inline-block;
+    vertical-align: top;
+    padding: 0 10px;
+    font-size: 22px;
+    height: 100%;
+    line-height: 50px;
+  }
+}
+
 .user-panel-box {
   cursor: pointer;
-  position: absolute;
-  top: 0;
-  right: 40px;
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 30px;
   .user-panel-btn {
     position: relative;
     display: block;
