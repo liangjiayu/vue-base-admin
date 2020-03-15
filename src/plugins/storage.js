@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import CONFIG from '../configs/index';
 
 function _get(object = {}, path, defaultValue) {
@@ -7,7 +8,7 @@ function _get(object = {}, path, defaultValue) {
   let result = undefined;
   let pathArray = path.split('.');
 
-  pathArray.find((key, index) => {
+  pathArray.find((key) => {
     if (!object) {
       return true;
     }
@@ -88,4 +89,6 @@ class Storage {
 let _Storage = new Storage(CONFIG.STORAGE_KEY);
 
 window._Storage = _Storage;
+Vue.prototype.$storage = _Storage;
+
 export default _Storage;
