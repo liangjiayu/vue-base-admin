@@ -45,8 +45,8 @@ const request = async (option = {}) => {
     data: {},
     method: 'post',
     hideLoading: false,
-    success: (res) => {},
-    fail: (error) => {},
+    success: () => {},
+    fail: () => {},
     validator: {},
   };
   let _option = Object.assign({}, optionDefalut, option);

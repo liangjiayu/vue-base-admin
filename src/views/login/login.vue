@@ -118,7 +118,7 @@ export default {
               this.setUserInfo(res.data);
               this.$router.replace('/');
             },
-            (error) => {}
+            () => {}
           );
         }
       });

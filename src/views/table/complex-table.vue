@@ -218,7 +218,7 @@ export default {
             data: {
               id: row.id,
             },
-          }).then((res) => {
+          }).then(() => {
             this.$message({
               type: 'success',
               message: '删除成功!',
@@ -268,7 +268,7 @@ export default {
           this.JY.request({
             url: postUrl,
             data: this.dialogFormData,
-          }).then((res) => {
+          }).then(() => {
             this.dialogFormVisible = false;
             this.getTableData();
           });

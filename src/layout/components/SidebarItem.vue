@@ -25,7 +25,7 @@
 
 
 <script>
-import path from 'path';
+// import path from 'path';
 import SidebarLink from './SidebarLink';
 
 export default {
