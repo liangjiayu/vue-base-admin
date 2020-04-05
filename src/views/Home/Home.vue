@@ -52,7 +52,11 @@ export default {
   },
   computed: {},
   watch: {},
-  mounted() {},
+  mounted() {
+    this.axios.post('/table/list', {}, { hideError: true }).then((res) => {
+      console.log(res);
+    });
+  },
   methods: {},
 };
 </script>

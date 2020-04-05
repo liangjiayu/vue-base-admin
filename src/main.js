@@ -6,6 +6,7 @@ import CONFIG from './configs/index';
 // plugins
 import './plugins/element';
 import './plugins/storage';
+import './plugins/axios';
 
 import App from './App.vue';
 import router from './router/index';
