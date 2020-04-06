@@ -60,11 +60,7 @@ export default {
   methods: {
     getTableData() {
       this.tableLoading = true;
-      this.JY.request({
-        url: '/table/list',
-        data: this.tableQuery,
-        hideLoading: true,
-      }).then((res) => {
+      this.axios.post('/table/list', this.tableQuery).then((res) => {
         this.tableLoading = false;
         this.tableData.list = res.data.list;
         this.tableData.total = res.data.total;

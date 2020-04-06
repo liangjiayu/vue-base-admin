@@ -11,17 +11,8 @@ import './plugins/axios';
 import App from './App.vue';
 import router from './router/index';
 import store from './store/index';
-import request from './utils/request';
-import { showLoading, showToast, validator } from './utils/utils';
 
 import './permission';
-
-Vue.prototype.JY = {
-  request,
-  showLoading,
-  showToast,
-  validator,
-};
 
 Vue.prototype.CONFIG = CONFIG;
 Vue.prototype._log = console.log;

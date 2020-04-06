@@ -71,7 +71,9 @@ export default {
         password: '',
       },
       nameRules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
+        username: [
+          { required: true, message: '请输入用户名', trigger: 'blur' },
+        ],
         password: [{ required: true, message: '请输入密码', trigger: 'blur' }],
       },
       phoneForm: {
@@ -110,10 +112,7 @@ export default {
       }
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          this.JY.request({
-            url: '/user/login',
-            data: formData,
-          }).then(
+          this.axios.post('/user/login', formData).then(
             (res) => {
               this.setUserInfo(res.data);
               this.$router.replace('/');

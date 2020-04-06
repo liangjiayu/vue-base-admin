@@ -181,14 +181,10 @@ export default {
   methods: {
     getTableData() {
       this.tableLoading = true;
-      this.JY.request({
-        url: '/table/list',
-        data: this.tableQuery,
-        hideLoading: true,
-      }).then((res) => {
+      this.axios.post('/table/list', this.tableQuery).then((res) => {
         this.tableLoading = false;
-        this.tableData.list = res.data.list;
-        this.tableData.total = res.data.total;
+        this.tableData.list = res.list;
+        this.tableData.total = res.total;
       });
     },
 
@@ -213,12 +209,7 @@ export default {
     handleDelete(row) {
       this.$confirm('是否要删除该数据?', '提示', {}).then(
         () => {
-          this.JY.request({
-            url: '/table/delete',
-            data: {
-              id: row.id,
-            },
-          }).then(() => {
+          this.axios.post('/table/delete', { id: row.id }).then(() => {
             this.$message({
               type: 'success',
               message: '删除成功!',
@@ -265,10 +256,7 @@ export default {
           if (this.dialogFormType === 'update') {
             postUrl = '/table/update';
           }
-          this.JY.request({
-            url: postUrl,
-            data: this.dialogFormData,
-          }).then(() => {
+          this.axios.post(postUrl, this.dialogFormData).then(() => {
             this.dialogFormVisible = false;
             this.getTableData();
           });
