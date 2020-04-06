@@ -114,7 +114,7 @@ export default {
         if (valid) {
           this.axios.post('/user/login', formData).then(
             (res) => {
-              this.setUserInfo(res.data);
+              this.setUserInfo(res);
               this.$router.replace('/');
             },
             () => {}

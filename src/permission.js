@@ -25,21 +25,19 @@ router.beforeEach(async (to, from, next) => {
     if (!userInfo) {
       return next({ path: '/login', replace: true });
     }
-    if (permission.role === userInfo.role) {
-      return next();
-    } else {
+    if (permission.role !== userInfo.role) {
       return next({ path: '/error/403', replace: true });
     }
+    return next();
   }
 
   // 需要 登录权限的页面
   if (permission.auth) {
-    if (userInfo) {
-      return next();
-    } else {
+    if (!userInfo) {
       return next({ path: '/login', replace: true });
     }
-  } else {
     return next();
   }
+
+  return next();
 });

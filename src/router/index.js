@@ -21,13 +21,16 @@ let view = (path = '', component, meta = {}, children = []) => {
 };
 
 const baseRoutes = [
-  view('/login', BlankLayout, { title: '登录模块', redirect: '/login/login', permission: { auth: false } }, [
-    view('login', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
+  view('/login', BlankLayout, { title: '登录模块', permission: { auth: false } }, [
+    view('', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
   ]),
 
   view('/', BlankLayout, { title: '首页', redirect: '/home', layout: 'PanelLayout' }, [
     view('home', () => import('../views/home/home.vue'), { title: '首页模块-首页' }),
-    view('home-1', () => import('../views/home/home.vue'), { title: '首页模块-首页', permission: { auth: true, role: 'member' } }),
+    view('home-1', () => import('../views/home/home.vue'), {
+      title: '首页模块-首页',
+      permission: { auth: true, role: 'member' },
+    }),
   ]),
 
   view('/permission', BlankLayout, { title: '权限管理', redirect: '/permission/role', layout: 'PanelLayout' }, [

@@ -62,8 +62,8 @@ export default {
       this.tableLoading = true;
       this.axios.post('/table/list', this.tableQuery).then((res) => {
         this.tableLoading = false;
-        this.tableData.list = res.data.list;
-        this.tableData.total = res.data.total;
+        this.tableData.list = res.list;
+        this.tableData.total = res.total;
         this.$nextTick(() => {
           this.sortInit();
         });

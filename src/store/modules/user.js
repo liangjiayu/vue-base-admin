@@ -1,11 +1,13 @@
+import storage from '../../plugins/storage';
+
 const state = {
-  userInfo: window._Storage.get('userInfo', null),
+  userInfo: storage.get('userInfo', null),
 };
 
 const mutations = {
   setUserInfo(state, userInfo) {
     state.userInfo = userInfo;
-    window._Storage.set('userInfo', userInfo);
+    storage.set('userInfo', userInfo);
   },
 };
 

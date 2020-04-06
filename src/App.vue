@@ -6,6 +6,7 @@
 
 <script>
 import layouts from './layout/index.js';
+import CONFIG from './configs/index.js';
 
 export default {
   name: 'App',
@@ -31,9 +32,9 @@ export default {
           }
         }
         if (route.meta && route.meta.title) {
-          document.title = `${route.meta.title}_${this.CONFIG.PROJECT_TITLE}`;
+          document.title = `${route.meta.title}_${CONFIG.PROJECT_TITLE}`;
         } else {
-          document.title = this.CONFIG.PROJECT_TITLE;
+          document.title = CONFIG.PROJECT_TITLE;
         }
         this.LayoutId = layoutId;
       },
