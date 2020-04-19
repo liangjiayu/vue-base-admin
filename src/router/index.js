@@ -6,51 +6,141 @@ Vue.use(VueRouter);
 
 import BlankLayout from '../layout/BlankLayout.vue';
 
-let view = (path = '', component, meta = {}, children = []) => {
-  let redirect = '';
-  if (meta && meta.redirect) {
-    redirect = meta.redirect;
+// let view = (path = '', component, meta = {}, children = []) => {
+//   let redirect = '';
+//   if (meta && meta.redirect) {
+//     redirect = meta.redirect;
+//   }
+//   return {
+//     path: path,
+//     component: component,
+//     meta: meta,
+//     redirect: redirect,
+//     children: children,
+//   };
+// };
+
+/**
+ * path                           url
+ * component                      () => import('../views/login/login.vue')
+ * redirect: redirect             redirect
+ * name:'router-name'             name
+ * meta : {
+    layout                       布局名称
+    title: 'title'               页面标题
+    permission: {}               权限信息
   }
-  return {
-    path: path,
-    component: component,
-    meta: meta,
-    redirect: redirect,
-    children: children,
-  };
-};
+ */
 
 const baseRoutes = [
-  view('/login', BlankLayout, { title: '登录模块', permission: { auth: false } }, [
-    view('', () => import('../views/login/login.vue'), { title: '登录模块-登录' }),
-  ]),
+  {
+    path: '/login',
+    component: BlankLayout,
+    meta: {
+      title: '登录模块',
+      layout: 'BlankLayout',
+      permission: { auth: false },
+    },
+    children: [
+      {
+        path: '',
+        component: () => import('../views/login/login.vue'),
+      },
+    ],
+  },
 
-  view('/', BlankLayout, { title: '首页', redirect: '/home', layout: 'PanelLayout' }, [
-    view('home', () => import('../views/home/home.vue'), { title: '首页模块-首页' }),
-    view('home-1', () => import('../views/home/home.vue'), {
-      title: '首页模块-首页',
-      permission: { auth: true, role: 'member' },
-    }),
-  ]),
+  {
+    path: '/',
+    component: BlankLayout,
+    redirect: '/home',
+    meta: {
+      title: '首页模块',
+      layout: 'PanelLayout',
+      permission: { auth: true },
+    },
+    children: [
+      {
+        path: 'home',
+        component: () => import('../views/home/home.vue'),
+      },
+    ],
+  },
 
-  view('/permission', BlankLayout, { title: '权限管理', redirect: '/permission/role', layout: 'PanelLayout' }, [
-    view('role', () => import('../views/permission/role.vue'), { title: '权限管理-角色管理' }),
-  ]),
+  {
+    path: '/permission',
+    component: BlankLayout,
+    redirect: '/permission/role',
+    meta: {
+      title: '权限管理',
+      layout: 'PanelLayout',
+      permission: { auth: true },
+    },
+    children: [
+      {
+        path: 'role',
+        component: () => import('../views/permission/role.vue'),
+      },
+    ],
+  },
 
-  view('/table', BlankLayout, { title: '表格', redirect: '/table/complex-table', layout: 'PanelLayout' }, [
-    view('complex-table', () => import('../views/table/complex-table.vue'), { title: '综合表格' }),
-    view('drag-table', () => import('../views/table/drag-table.vue'), { title: '拖拽表格' }),
-    view('edit-table', () => import('../views/table/edit-table.vue'), { title: '编辑表格' }),
-  ]),
+  {
+    path: '/table',
+    component: BlankLayout,
+    redirect: '/table/complex-table',
+    meta: {
+      title: '表格',
+      layout: 'PanelLayout',
+      permission: { auth: true },
+    },
+    children: [
+      {
+        path: 'complex-table',
+        component: () => import('../views/table/complex-table.vue'),
+      },
+      {
+        path: 'drag-table',
+        component: () => import('../views/table/drag-table.vue'),
+      },
+      {
+        path: 'edit-table',
+        component: () => import('../views/table/edit-table.vue'),
+      },
+    ],
+  },
 
-  view('/error', BlankLayout, { title: '异常', redirect: '/error/404', layout: 'PanelLayout' }, [
-    view('204', () => import('../views/error/204.vue'), { title: '204' }),
-    view('403', () => import('../views/error/403.vue'), { title: '403' }),
-    view('404', () => import('../views/error/404.vue'), { title: '404' }),
-    view('500', () => import('../views/error/500.vue'), { title: '500' }),
-  ]),
+  {
+    path: '/error',
+    component: BlankLayout,
+    redirect: '/error/404',
+    meta: {
+      title: '异常',
+      layout: 'PanelLayout',
+      // permission: { auth: true },
+    },
+    children: [
+      {
+        path: '204',
+        component: () => import('../views/error/204.vue'),
+      },
+      {
+        path: '403',
+        component: () => import('../views/error/403.vue'),
+      },
+      {
+        path: '404',
+        component: () => import('../views/error/404.vue'),
+      },
+      {
+        path: '500',
+        component: () => import('../views/error/500.vue'),
+      },
+    ],
+  },
 
-  view('*', BlankLayout, { title: '404', redirect: '/error/404', layout: 'PanelLayout' }),
+  {
+    path: '*',
+    redirect: '/error/404',
+  },
 ];
 
 const router = new VueRouter({

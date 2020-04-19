@@ -1,3 +1,4 @@
+// ********   项目核心配置文件   ********
 const CONFIG = {
   API_URL: '/mock/dev-api',
 

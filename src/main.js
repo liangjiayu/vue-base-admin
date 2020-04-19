@@ -1,4 +1,7 @@
 import Vue from 'vue';
+import App from './App.vue';
+import router from './router/index';
+import store from './store/index';
 
 // plugins
 import './plugins/element';
@@ -12,9 +15,6 @@ import './styles/index.scss';
 // global auth
 import './permission';
 
-import App from './App.vue';
-import router from './router/index';
-import store from './store/index';
 
 Vue.prototype._log = console.log;
 Vue.config.productionTip = false;
